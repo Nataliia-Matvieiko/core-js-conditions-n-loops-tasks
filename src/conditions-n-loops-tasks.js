@@ -149,8 +149,14 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  const lowercaseStr = str;
+  for (let i = 0, j = lowercaseStr.length - 1; i < j; i += 1, j -= 1) {
+    if (lowercaseStr[i] !== lowercaseStr[j]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 /**
