@@ -283,6 +283,7 @@ function getBalanceIndex(arr) {
     }
     return sum;
   };
+
   for (let i = 0; i < length; i += 1) {
     if (calculateSum(0, i) === calculateSum(i + 1, length)) {
       return i;
@@ -370,16 +371,21 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(str, iterations) {
-  const charArray = str.split('');
+function shuffleChar(string, iterations) {
+  const { length } = string;
+  let str = string;
   for (let i = 0; i < iterations; i += 1) {
-    for (let j = 1; j < charArray.length; j += 2) {
-      const temp = charArray[j];
-      charArray.splice(j, 1);
-      charArray.push(temp);
+    let oddChars = '';
+    for (let j = 1; j < length; j += 2) {
+      oddChars += str[j];
     }
+    let newStr = '';
+    for (let j = 0; j < length; j += 2) {
+      newStr += str[j];
+    }
+    str = newStr + oddChars;
   }
-  return charArray.join('');
+  return str;
 }
 
 /**
