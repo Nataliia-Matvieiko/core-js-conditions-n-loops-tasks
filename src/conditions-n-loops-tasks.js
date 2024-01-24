@@ -237,7 +237,7 @@ function getIndexOf(str, letter) {
  * Checks if a number contains a specific digit.
  * In this task, the use of methods of the String and Array classes is not allowed.
  *
- * @param {number} num - The number to check.
+ * @param {number} number - The number to check.
  * @param {number} digit - The digit to search for.
  * @return {boolean} True if the number contains the digit, false otherwise.
  *
@@ -370,8 +370,16 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  const charArray = str.split('');
+  for (let i = 0; i < iterations; i += 1) {
+    for (let j = 1; j < charArray.length; j += 2) {
+      const temp = charArray[j];
+      charArray.splice(j, 1);
+      charArray.push(temp);
+    }
+  }
+  return charArray.join('');
 }
 
 /**
