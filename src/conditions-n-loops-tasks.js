@@ -50,7 +50,7 @@ function getMaxNumber(a, b, c) {
 }
 
 /**
- * Checks if a queen can capture a king in the next move on an 8x8 chessboard.
+ * Checks if a queen can capture a king in the next move on a 8x8 chessboard.
  * See more details at https://en.wikipedia.org/wiki/Queen_(chess)
  *
  * @typedef {{
@@ -276,6 +276,7 @@ function isContainNumber(number, digit) {
  */
 function getBalanceIndex(arr) {
   const { length } = arr;
+
   const calculateSum = (start, end) => {
     let sum = 0;
     for (let i = start; i < end; i += 1) {
@@ -289,6 +290,7 @@ function getBalanceIndex(arr) {
       return i;
     }
   }
+
   return -1;
 }
 
@@ -313,8 +315,49 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  if (size <= 0) {
+    throw new Error('Invalid matrix size');
+  }
+  const matrix = [];
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = [];
+    for (let j = 0; j < size; j += 1) {
+      matrix[i][j] = 0;
+    }
+  }
+  let num = 1;
+  let rowStart = 0;
+  let rowEnd = size - 1;
+  let colStart = 0;
+  let colEnd = size - 1;
+  while (rowStart <= rowEnd && colStart <= colEnd) {
+    for (let i = colStart; i <= colEnd; i += 1) {
+      matrix[rowStart][i] = num;
+      num += 1;
+    }
+    rowStart += 1;
+    for (let i = rowStart; i <= rowEnd; i += 1) {
+      matrix[i][colEnd] = num;
+      num += 1;
+    }
+    colEnd -= 1;
+    if (rowStart <= rowEnd) {
+      for (let i = colEnd; i >= colStart; i -= 1) {
+        matrix[rowEnd][i] = num;
+        num += 1;
+      }
+      rowEnd -= 1;
+    }
+    if (colStart <= colEnd) {
+      for (let i = rowEnd; i >= rowStart; i -= 1) {
+        matrix[i][colStart] = num;
+        num += 1;
+      }
+      colStart += 1;
+    }
+  }
+  return matrix;
 }
 
 /**
@@ -433,8 +476,23 @@ function shuffleChar(string, iterations) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* num */) {
-  throw new Error('Not implemented');
+function getNearestBigger(num) {
+  const digits = Array.from(String(num), Number);
+  let i = digits.length - 2;
+  while (i >= 0 && digits[i] >= digits[i + 1]) {
+    i -= 1;
+  }
+  if (i >= 0) {
+    let j = digits.length - 1;
+    while (digits[j] <= digits[i]) {
+      j -= 1;
+    }
+    [digits[i], digits[j]] = [digits[j], digits[i]];
+    const rightPart = digits.splice(i + 1).sort((a, b) => a - b);
+    digits.push(...rightPart);
+  }
+  const result = parseInt(digits.join(''), 10);
+  return Number.isNaN(result) ? num : result;
 }
 
 module.exports = {
